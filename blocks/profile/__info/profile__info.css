@@ -11,5 +11,6 @@
     font-size: 18px;
     line-height: 22px;
     justify-content: flex-start;
+    max-width: max-content;
   }
 }

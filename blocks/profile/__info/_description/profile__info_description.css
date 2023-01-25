@@ -1,5 +1,5 @@
 .profile__info_description {
-  margin: 14px auto 36px;
+  margin: 5px 0 34px;
   width: 100%;
   font-style: normal;
   font-weight: 400;
@@ -16,7 +16,7 @@
   .profile__info_description {
     font-size: 18px;
     line-height: 22px;
-    margin: 16px auto 0 30px;
+    margin: 16px 0 0 30px;
     text-align: start;
     max-width: 336px;
   }

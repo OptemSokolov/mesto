@@ -7,8 +7,8 @@ const saveButton = container.querySelector('.popup__container');
 let popup = container.querySelector('.popup');
 let inputUsername = container.querySelector('.popup__input_name');
 let inputAbout = container.querySelector('.popup__input_about');
-let username = container.querySelector('.profile__info_name');
-let about = container.querySelector('.profile__info_description');
+let username = container.querySelector('.profile__title');
+let about = container.querySelector('.profile__description');
 
 function editProfile() {
   inputUsername.value = username.textContent;

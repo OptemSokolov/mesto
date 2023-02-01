@@ -4,19 +4,25 @@
   background-repeat: no-repeat;
   background-position: center;
   border: none;
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
+  background-size: 62.5%;
   padding: 0;
-  margin-bottom: 16px;
-  margin-left: 262px;
   cursor: pointer;
+  position: relative;
+  left: 258px;
+  bottom: 370px;
+}
+
+.popup__close-icon:hover {
+  opacity: 0.6;
+  transition: 0.2s ease-in;
 }
 
 @media screen and (min-width: 768px) {
   .popup__close-icon {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 8px;
-    margin-left: 468px;
+    background-size: 100%;
+    left: 434px;
+    bottom: 375px;
   }
 }

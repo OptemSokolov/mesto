@@ -1,4 +1,5 @@
 .popup__close-icon {
+  padding: 0;
   background: transparent;
   background-image: url(../../../images/close-icon.svg);
   background-repeat: no-repeat;

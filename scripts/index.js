@@ -1,13 +1,54 @@
+// ПР4
 const container = document.querySelector('.container');
-const popup = document.querySelector('.popup');
 const popupProfile = document.querySelector('.popup-profile');
-const saveButton = document.querySelector('.form-profile');
-const editButton = document.querySelector('.profile__edit-button');
-const closeButton = document.querySelectorAll('.popup__close-icon');
+const profileForm = document.querySelector('.form-profile');
+const profileEditButton = document.querySelector('.profile__edit-button');
+const closeButtons = document.querySelectorAll('.popup__close-icon');
 const inputUsername = document.querySelector('.popup__input_value_name');
 const inputAbout = document.querySelector('.popup__input_value_about');
 const username = document.querySelector('.profile__title');
 const about = document.querySelector('.profile__description');
+// ПР5
+const cards = document.querySelector('.cards');
+const cardsList = document.querySelector('.cards__list');
+const cardTemplate = document.querySelector('#card').content;
+const popupPlace = document.querySelector('.popup-place');
+const popupImage = document.querySelector('.popup-image');
+const addButton = document.querySelector('.profile__add-button');
+const inputPlaceName = document.querySelector('.popup__input_place_name');
+const inputPlaceLink = document.querySelector('.popup__input_place_link');
+const buttonClosePlace = document.querySelector('.popup__close-icon_type_add-picture');
+const placeForm = document.querySelector('.form-place');
+const photoPopupImage = document.querySelector('.popup__image-photo');
+const titlePopupImage = document.querySelector('.popup__image-title');
+
+//Массив карточек
+const initialCards = [
+  {
+    name: 'Великий Новгород',
+    link: 'https://images.unsplash.com/photo-1632214298882-03a0aa4bcc90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1744&q=80'
+  },
+  {
+    name: 'Валдай',
+    link: 'https://farm5.staticflickr.com/4398/37307634182_91ff589e19_o.jpg'
+  },
+  {
+    name: 'Петергоф',
+    link: 'https://images.unsplash.com/photo-1577695912741-960e89e5dcee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80'
+  },
+  {
+    name: 'Москва',
+    link: 'https://images.unsplash.com/photo-1495542779398-9fec7dc7986c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80'
+  },
+  {
+    name: 'Калининград',
+    link: 'https://s0.rbk.ru/v6_top_pics/media/img/9/62/756164904017629.jpg'
+  },
+  {
+    name: 'Воронеж',
+    link: 'https://blog.ostrovok.ru/wp-content/uploads/2020/10/v_6.jpg'
+  },
+];
 
 // Функция появления формы (общая)
 function openPopup(popup) {
@@ -18,7 +59,7 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 };
 // Функция закрытия попапов
-closeButton.forEach((button) => {
+closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
@@ -36,69 +77,6 @@ function saveUserInfo(evt) {
   about.textContent = inputAbout.value;
   closePopup(popupProfile);
 };
-// Вызов функций попап профиль
-editButton.addEventListener('click', editProfile);
-saveButton.addEventListener('submit', saveUserInfo);
-
-// ПР5
-//Массив карточек
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-const cards = document.querySelector('.cards');
-const cardsList = document.querySelector('.cards__list');
-const cardTemplate = document.querySelector('#card').content;
-
-// Попап Плэйс
-const popupPlace = document.querySelector('.popup-place');
-const popupImage = document.querySelector('.popup-image');
-const addButton = document.querySelector('.profile__add-button');
-const inputPlaceName = document.querySelector('.popup__input_place_name');
-const inputPlaceLink = document.querySelector('.popup__input_place_link');
-const buttonClosePlace = document.querySelector('.popup__close-icon_type_add-picture');
-const createButton = document.querySelector('.form-place');
-const photoPopupImage = document.querySelector('.popup__image-photo');
-const titlePopupImage = document.querySelector('.popup__image-title');
-
-// Функция открытия формы добавления плэйс
-function openPopupPlace() {
-  openPopup(popupPlace);
-
-};
-// Вызов функций попап плэйс
-addButton.addEventListener('click', openPopupPlace);
-
-// Открытие фотографии
-function openPlaceImage(event) {
-  photoPopupImage.src = event.target.src;
-  photoPopupImage.alt = event.target.alt;
-  titlePopupImage.textContent = event.target.alt;
-  openPopup(popupImage);
-};
 
 // Функция добавления стандартных карточек
 function addCard(item) {
@@ -106,21 +84,23 @@ function addCard(item) {
   const cardImage = userCard.querySelector('.card__image');
   const cardLikeButton = userCard.querySelector('.card__like-button');
   const cardDeleteButton = userCard.querySelector('.card__delete-button');
-
   userCard.querySelector('.card__title').textContent = item.name;
   cardImage.src = item.link;
   cardImage.setAttribute('alt', item.name);
   cardImage.addEventListener('click', openPlaceImage);
+  // cardImage.addEventListener('click', () => handleCardClick(item));
   cardDeleteButton.addEventListener('click', deleteCard);
-  cardLikeButton.addEventListener('click', addLike);
-
+  cardLikeButton.addEventListener('click', toggleLike);
   return userCard;
-}
-
+};
 initialCards.forEach(item => {
   cardsList.append(addCard(item));
 });
 
+// Функция открытия формы добавления плэйс
+function openPopupPlace() {
+  openPopup(popupPlace);
+};
 // Функция создания/сохранения новой карточки
 function submitPopupPlace(evt) {
   evt.preventDefault();
@@ -130,15 +110,26 @@ function submitPopupPlace(evt) {
   closePopup(popupPlace);
   evt.target.reset()
 };
-
-createButton.addEventListener('submit', submitPopupPlace);
-
 //Функция удаления карточки
 function deleteCard(evt) {
   const cardRemove = evt.target.closest('.card');
   cardRemove.remove();
 };
+// Функция открытия большой картинки
+function openPlaceImage(event) {
+  photoPopupImage.src = event.target.src;
+  photoPopupImage.alt = event.target.alt;
+  titlePopupImage.textContent = event.target.alt;
+  openPopup(popupImage);
+};
 // Функция добавления лайка
-function addLike(evt) {
+function toggleLike(evt) {
   evt.target.classList.toggle('card__like-button_active');
 };
+
+// Вызов функций попап профиль
+profileEditButton.addEventListener('click', editProfile);
+profileForm.addEventListener('submit', saveUserInfo);
+// Вызов функций попап плэйс
+addButton.addEventListener('click', openPopupPlace);
+placeForm.addEventListener('submit', submitPopupPlace);

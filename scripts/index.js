@@ -4,8 +4,8 @@ const popupProfile = document.querySelector('.popup-profile');
 const profileForm = document.querySelector('.form-profile');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const closeButtons = document.querySelectorAll('.popup__close-icon');
-const inputUsername = document.querySelector('.popup__input_value_name');
-const inputAbout = document.querySelector('.popup__input_value_about');
+const inputUsername = document.querySelector('#username');
+const inputAbout = document.querySelector('#about');
 const username = document.querySelector('.profile__title');
 const about = document.querySelector('.profile__description');
 // ПР5
@@ -15,8 +15,8 @@ const cardTemplate = document.querySelector('#card').content;
 const popupPlace = document.querySelector('.popup-place');
 const popupImage = document.querySelector('.popup-image');
 const addButton = document.querySelector('.profile__add-button');
-const inputPlaceName = document.querySelector('.popup__input_place_name');
-const inputPlaceLink = document.querySelector('.popup__input_place_link');
+const inputPlaceName = document.querySelector('#place-name');
+const inputPlaceLink = document.querySelector('#place-link');
 const buttonClosePlace = document.querySelector('.popup__close-icon_type_add-picture');
 const placeForm = document.querySelector('.form-place');
 const photoPopupImage = document.querySelector('.popup__image-photo');
@@ -51,12 +51,16 @@ const initialCards = [
 ];
 
 // Функция появления формы (общая)
-function openPopup(popup) {
+const openPopup = (popup) => {
   popup.classList.add('popup_opened');
+  popup.addEventListener("mousedown", closePopupOverlay);
+  document.addEventListener("keydown", (closePopupEscape));
 };
 // Функция скрытия формы (общая)
-function closePopup(popup) {
+const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
+  popup.removeEventListener("mousedown", closePopupOverlay);
+  document.removeEventListener("keydown", (closePopupEscape));
 };
 // Функция закрытия попапов
 closeButtons.forEach((button) => {
@@ -65,13 +69,13 @@ closeButtons.forEach((button) => {
 });
 
 // Функция редактирования профиля
-function editProfile() {
+const editProfile = () => {
   inputUsername.value = username.textContent;
   inputAbout.value = about.textContent;
   openPopup(popupProfile);
 };
 // Функция срохранения изменений профиля
-function saveUserInfo(evt) {
+const saveUserInfo = (evt) => {
   evt.preventDefault();
   username.textContent = inputUsername.value;
   about.textContent = inputAbout.value;
@@ -79,7 +83,7 @@ function saveUserInfo(evt) {
 };
 
 // Функция добавления стандартных карточек
-function addCard(item) {
+const addCard = (item) => {
   const userCard = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = userCard.querySelector('.card__image');
   const cardLikeButton = userCard.querySelector('.card__like-button');
@@ -98,11 +102,11 @@ initialCards.forEach(item => {
 });
 
 // Функция открытия формы добавления плэйс
-function openPopupPlace() {
+const openPopupPlace = () => {
   openPopup(popupPlace);
 };
 // Функция создания/сохранения новой карточки
-function submitPopupPlace(evt) {
+const submitPopupPlace = (evt) => {
   evt.preventDefault();
   const card = { name: inputPlaceName.value, link: inputPlaceLink.value, alt: inputPlaceName.value };
   const newCard = addCard(card);
@@ -125,6 +129,19 @@ function openPlaceImage(event) {
 // Функция добавления лайка
 function toggleLike(evt) {
   evt.target.classList.toggle('card__like-button_active');
+};
+// Функция закрытия попапа по клику на оверлей
+const closePopupOverlay = (event) => {
+  if (event.target === event.currentTarget) {
+    closePopup(event.currentTarget);
+  }
+};
+// Функция закрытия попапа по клику на ескейп
+const closePopupEscape = (evt) => {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
+  }
 };
 
 // Вызов функций попап профиль

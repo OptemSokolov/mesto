@@ -1,7 +1,7 @@
 // ПР4
 const container = document.querySelector('.container');
 const popupProfile = document.querySelector('.popup-profile');
-const profileForm = document.querySelector('.form-profile');
+const profileForm = document.forms["form-profile"];
 const profileEditButton = document.querySelector('.profile__edit-button');
 const closeButtons = document.querySelectorAll('.popup__close-icon');
 const inputUsername = document.querySelector('#username');
@@ -18,7 +18,7 @@ const addButton = document.querySelector('.profile__add-button');
 const inputPlaceName = document.querySelector('#place-name');
 const inputPlaceLink = document.querySelector('#place-link');
 const buttonClosePlace = document.querySelector('.popup__close-icon_type_add-picture');
-const placeForm = document.querySelector('.form-place');
+const placeForm = document.forms['form-place'];
 const photoPopupImage = document.querySelector('.popup__image-photo');
 const titlePopupImage = document.querySelector('.popup__image-title');
 

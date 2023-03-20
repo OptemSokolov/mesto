@@ -1,61 +1,67 @@
-// Объект с константами из форм
-const formValidationList = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  errorClass: "popup__input_type_error",
-};
+import { formValidationList } from "./index.js";
 
-// Функция запуска валидации
-function enableValidation(config) {
-  const forms = document.querySelectorAll(config.formSelector);
-  forms.forEach((item) => {
-    item.addEventListener("input", () => {
-      toggleButton(item, config);
+class FormValidator {
+  constructor(config, form) {
+    this._config = config;
+    this._form = form;
+    this._buttonSubmit = this._form.querySelector(this._config.submitButtonSelector);
+  }
+
+  enableValidation() {
+    this._addInputListeners();
+    this._toggleButton();
+  }
+
+  // Показать сообщение об ошибке
+  _showInputError(item) {
+    this._inputId = item.id;
+    this._errorElement = this._form.querySelector(`#${this._inputId}-error`);
+    item.classList.add(this._config.errorClass);
+    this._errorElement.textContent = item.validationMessage;
+  }
+
+   //Скрыть сообщение об ошибке
+  _hideInputError(item) {
+    this._inputId = item.id;
+    this._errorElement = this._form.querySelector(`#${this._inputId}-error`);
+    item.classList.remove(this._config.errorClass);
+    this._errorElement.textContent = "";
+  }
+
+    // функция валидности данных инпутов
+  _handleFormInput(item) {
+    if (item.validity.valid) {
+      this._hideInputError(item);
+    } else {
+      this._showInputError(item);
+    }
+  }
+
+     // Функция переключения состояния кнопки
+  _toggleButton() {
+    const isFormValid = this._form.checkValidity();
+    this._buttonSubmit.disabled = !isFormValid; 
+    this._buttonSubmit.classList.toggle(
+      this._config.inactiveButtonClass,
+      !isFormValid
+    );
+  }
+
+   // Слушатели
+   _addInputListeners() {
+    this._form.querySelectorAll(this._config.inputSelector).forEach((item) => {
+      item.addEventListener("input", () => {
+        this._handleFormInput(item);
+        this._toggleButton();
+      });
     });
-    addInputListeners(item, config);
-    toggleButton(item, config);
-    item.addEventListener('reset', () => {
+    this._form.addEventListener("reset", () => {
       setTimeout(() => {
-        toggleButton(item, config);
+        this._toggleButton();
       }, 0);
     });
-  });
-}
-
-// функция валидности данных инпутов
-function handleFormInput(event, config) {
-  const input = event.target;
-  const inputId = input.id;
-  const errorElement = document.querySelector(`#${inputId}-error`);
-
-  if (input.validity.valid) {
-    input.classList.remove(config.errorClass);
-    errorElement.textContent = "";
-  } else {
-    input.classList.add(config.errorClass);
-    errorElement.textContent = input.validationMessage;
   }
 }
+// Удали старые функции после клас кард
 
-// Функция переключения состояния кнопки
-function toggleButton(form, config) {
-  const buttonSubmit = form.querySelector(config.submitButtonSelector);
-  const isFormValid = form.checkValidity();
-  buttonSubmit.disabled = !isFormValid;
-  buttonSubmit.classList.toggle(config.inactiveButtonClass, !isFormValid);
-}
-
-// Функция добавления слушателей на импуты
-function addInputListeners(form, config) {
-  const inputList = form.querySelectorAll(config.inputSelector);
-  inputList.forEach(function (item) {
-    item.addEventListener("input", (event) => {
-      handleFormInput(event, config);
-    });
-  });
-};
-
-// Вызов функции включения валидации
-enableValidation(formValidationList);
+export {formValidationList, FormValidator};

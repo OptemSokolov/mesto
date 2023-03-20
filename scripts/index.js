@@ -1,15 +1,17 @@
+import { FormValidator } from "./FormValidator.js";
+import { Card } from "./Card.js";
+
 // ПР4
-const container = document.querySelector('.container');
+// const container = document.querySelector('.container');
 const popupProfile = document.querySelector('.popup-profile');
-const profileForm = document.forms["form-profile"];
 const profileEditButton = document.querySelector('.profile__edit-button');
-const closeButtons = document.querySelectorAll('.popup__close-icon');
+
 const inputUsername = document.querySelector('#username');
 const inputAbout = document.querySelector('#about');
 const username = document.querySelector('.profile__title');
 const about = document.querySelector('.profile__description');
 // ПР5
-const cards = document.querySelector('.cards');
+// const cards = document.querySelector('.cards');
 const cardsList = document.querySelector('.cards__list');
 const cardTemplate = document.querySelector('#card').content;
 const popupPlace = document.querySelector('.popup-place');
@@ -17,12 +19,16 @@ const popupImage = document.querySelector('.popup-image');
 const addButton = document.querySelector('.profile__add-button');
 const inputPlaceName = document.querySelector('#place-name');
 const inputPlaceLink = document.querySelector('#place-link');
-const buttonClosePlace = document.querySelector('.popup__close-icon_type_add-picture');
-const placeForm = document.forms['form-place'];
+// const buttonClosePlace = document.querySelector('.popup__close-icon_type_add-picture');
 const photoPopupImage = document.querySelector('.popup__image-photo');
 const titlePopupImage = document.querySelector('.popup__image-title');
 
-//Массив карточек
+// ПР7 Сортировка
+const profileForm = document.forms["form-profile"];
+const placeForm = document.forms['form-place'];
+
+
+// Массив карточек
 const initialCards = [
   {
     name: 'Великий Новгород',
@@ -62,18 +68,26 @@ const closePopup = (popup) => {
   popup.removeEventListener("mousedown", closePopupOverlay);
   document.removeEventListener("keydown", (closePopupEscape));
 };
-// Функция закрытия попапов
+// Функция закрытия попапов нажатием на крестик
+const closeButtons = document.querySelectorAll('.popup__close-icon');
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
-
-// Функция редактирования профиля
-const editProfile = () => {
-  inputUsername.value = username.textContent;
-  inputAbout.value = about.textContent;
-  openPopup(popupProfile);
+// Функция закрытия попапа по клику на ескейп
+const closePopupEscape = (evt) => {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
+  }
 };
+// Функция закрытия попапа по клику на оверлей
+const closePopupOverlay = (event) => {
+  if (event.target === event.currentTarget) {
+    closePopup(event.currentTarget);
+  }
+};
+
 // Функция срохранения изменений профиля
 const saveUserInfo = (evt) => {
   evt.preventDefault();
@@ -81,6 +95,15 @@ const saveUserInfo = (evt) => {
   about.textContent = inputAbout.value;
   closePopup(popupProfile);
 };
+
+
+// Функция редактирования профиля
+const editProfile = () => {
+  inputUsername.value = username.textContent;
+  inputAbout.value = about.textContent;
+  openPopup(popupProfile);
+};
+
 
 // Функция добавления стандартных карточек
 const addCard = (item) => {
@@ -130,19 +153,6 @@ function openPlaceImage(event) {
 function toggleLike(evt) {
   evt.target.classList.toggle('card__like-button_active');
 };
-// Функция закрытия попапа по клику на оверлей
-const closePopupOverlay = (event) => {
-  if (event.target === event.currentTarget) {
-    closePopup(event.currentTarget);
-  }
-};
-// Функция закрытия попапа по клику на ескейп
-const closePopupEscape = (evt) => {
-  if (evt.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_opened");
-    closePopup(openedPopup);
-  }
-};
 
 // Вызов функций попап профиль
 profileEditButton.addEventListener('click', editProfile);
@@ -150,3 +160,23 @@ profileForm.addEventListener('submit', saveUserInfo);
 // Вызов функций попап плэйс
 addButton.addEventListener('click', openPopupPlace);
 placeForm.addEventListener('submit', submitPopupPlace);
+
+
+// ПР7 ---------------------------------------------------------------------
+
+// Объект с константами из форм
+const formValidationList = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  errorClass: "popup__input_type_error",
+};
+// Валидация форм профиль и плейс
+const editProfileForm = new FormValidator(formValidationList, profileForm);
+editProfileForm.enableValidation();
+const addCardForm = new FormValidator(formValidationList, placeForm);
+addCardForm.enableValidation();
+
+
+export {formValidationList, openPopup, initialCards, photoPopupImage};

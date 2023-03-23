@@ -1,13 +1,17 @@
 import {openPopup, popupImage} from "./index.js";
 
+const photoPopupImageSrc = document.querySelector(".popup__image-photo");
+const photoPopupImageAlt = document.querySelector(".popup__image-photo");
+const titlePopupImage = document.querySelector(".popup__image-title");
+
+
+
 class Card {
   constructor(link, name, templateSelector) {
     this._link = link;
     this._name = name;
     this._templateSelector = templateSelector;
-    this._photoPopupImageSrc = document.querySelector(".popup__image-photo");
-    this._photoPopupImageAlt = document.querySelector(".popup__image-photo");
-    this._titlePopupImage = document.querySelector(".popup__image-title");
+    
   }
 
   _getTemplate() {
@@ -19,18 +23,19 @@ class Card {
     return cardImage;
   }
 
-  generateCard() {
-    this._element = this._getTemplate();
-    this._setEventListeners();
-    this._element.querySelector(".card__image").src = this._link;
-    this._element.querySelector(".card__image").alt = this._name;
-    this._element.querySelector(".card__title").textContent = this._name;
+  generateCard() { 
+    this._element = this._getTemplate(); 
+    this._element.querySelector(".card__image").src = this._link; 
+    this._element.querySelector(".card__image").alt = this._name; 
+    this._element.querySelector(".card__title").textContent = this._name; 
+    
+    // Добавление лайка 
+    this._likeButton = this._element.querySelector(".card__like-button"); 
+    this._card = this._element; 
+    
+    this._setEventListeners(); 
+    return this._element; 
 
-    // Добавление лайка
-    this._likeButton = this._element.querySelector(".card__like-button");
-    this._card = this._element;
-
-    return this._element;
   }
 
   _setEventListeners() {
@@ -56,9 +61,9 @@ class Card {
   }
 
   _openCard() {
-    this._photoPopupImageSrc.src = this._link;
-    this._photoPopupImageAlt.alt = this._name;
-    this._titlePopupImage .textContent = this._name;
+    photoPopupImageSrc.src = this._link;
+    photoPopupImageAlt.alt = this._name;
+    titlePopupImage .textContent = this._name;
     openPopup(popupImage);
   }
 

@@ -4,7 +4,7 @@ const photoPopupImageSrc = document.querySelector(".popup__image-photo");
 const photoPopupImageAlt = document.querySelector(".popup__image-photo");
 const titlePopupImage = document.querySelector(".popup__image-title");
 
-
+// Добавить handleCardClick из ревью ПР7
 
 class Card {
   constructor(link, name, templateSelector) {
@@ -25,33 +25,29 @@ class Card {
 
   generateCard() { 
     this._element = this._getTemplate(); 
-    this._element.querySelector(".card__image").src = this._link; 
-    this._element.querySelector(".card__image").alt = this._name; 
-    this._element.querySelector(".card__title").textContent = this._name; 
-    
-    // Добавление лайка 
+    this._cardImage = this._element.querySelector(".card__image");
+    this._cardTitle = this._element.querySelector(".card__title");
     this._likeButton = this._element.querySelector(".card__like-button"); 
+    this._deleteButton = this._element.querySelector(".card__delete-button");
     this._card = this._element; 
-    
+
+    this._cardImage.src = this._link; 
+    this._cardImage.alt = this._name; 
+    this._cardTitle.textContent = this._name; 
+       
     this._setEventListeners(); 
     return this._element; 
 
   }
 
   _setEventListeners() {
-    this._element
-      .querySelector(".card__like-button")
-      .addEventListener("click", () => {
+    this._likeButton.addEventListener("click", () => {
         this._toggleLike();
       });
-    this._element
-      .querySelector(".card__delete-button")
-      .addEventListener("click", () => {
+    this._deleteButton.addEventListener("click", () => {
         this._trashCard();
       });
-    this._element
-      .querySelector(".card__image")
-      .addEventListener("click", (event) => {
+    this._cardImage.addEventListener("click", (event) => {
         this._openCard();
       });
   }

@@ -100,6 +100,7 @@ const initialCards = [
 function createCard(item) {
   const card = new Card(item.link, item.name, "#card");
   return card.generateCard(); 
+  console.log(card)
 }
 
 const cardsList = document.querySelector('.cards__list');

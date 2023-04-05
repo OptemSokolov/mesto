@@ -1,17 +1,9 @@
-import {openPopup, popupImage} from "./index.js";
-
-const photoPopupImageSrc = document.querySelector(".popup__image-photo");
-const photoPopupImageAlt = document.querySelector(".popup__image-photo");
-const titlePopupImage = document.querySelector(".popup__image-title");
-
-// Добавить handleCardClick из ревью ПР7
-
-class Card {
-  constructor(link, name, templateSelector) {
-    this._link = link;
-    this._name = name;
+export class Card {
+  constructor({ data, handleCardClick }, templateSelector) {
+    this._link = data.link;
+    this._name = data.name;
     this._templateSelector = templateSelector;
-    
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -47,20 +39,14 @@ class Card {
     this._deleteButton.addEventListener("click", () => {
         this._trashCard();
       });
-    this._cardImage.addEventListener("click", (event) => {
-        this._openCard();
+      this._cardImage.addEventListener('click', () => {
+        this._handleCardClick(this._link, this._name)
       });
+  
   }
 
   _toggleLike() {
     this._likeButton.classList.toggle('card__like-button_active');
-  }
-
-  _openCard() {
-    photoPopupImageSrc.src = this._link;
-    photoPopupImageAlt.alt = this._name;
-    titlePopupImage .textContent = this._name;
-    openPopup(popupImage);
   }
 
   _trashCard() {
@@ -68,5 +54,3 @@ class Card {
     this._card = null;
   }
 }
-
-export {Card};

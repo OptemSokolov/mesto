@@ -1,6 +1,4 @@
-import { formValidationList } from "./index.js";
-
-class FormValidator {
+export class FormValidator {
   constructor(config, form) {
     this._config = config;
     this._form = form;
@@ -9,6 +7,10 @@ class FormValidator {
 
   enableValidation() {
     this._addInputListeners();
+    this._toggleButton();
+  }
+
+  resetValidation() {
     this._toggleButton();
   }
 
@@ -62,6 +64,3 @@ class FormValidator {
     });
   }
 }
-// Удали старые функции после клас кард
-
-export {formValidationList, FormValidator};

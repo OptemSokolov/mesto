@@ -46,8 +46,16 @@
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form form-profile" name="form-profile">
-        <input class="popup__input popup__input_type_error" type="text" placeholder="Имя пользователя" name="name"
-          id="username" minlength="2" maxlength="40" required value="">
+        <input 
+        class="popup__input popup__input_type_error" 
+        type="text" 
+        placeholder="Имя пользователя" 
+        name="name"
+        id="username" 
+        minlength="2" 
+        maxlength="40" 
+        required 
+        value="">
         <span class="popup__error" id="username-error"></span>
         <input class="popup__input popup__input_type_error" type="text" placeholder="О себе" name="description" id="about"
           minlength="2" maxlength="200" required value="">
@@ -61,11 +69,11 @@
     <div class="popup__container">
       <h2 class="popup__title">Новое место</h2>
       <form class="popup__form form-place" name="form-place">
-        <input class="popup__input popup__input_type_error" type="text" placeholder="Название" name="place-name"
+        <input class="popup__input popup__input_type_error" type="text" placeholder="Название" name="name"
           id="place-name" minlength="2" maxlength="30" required value="">
         <span class="popup__error" id="place-name-error"></span>
         <input class="popup__input popup__input_type_error" type="url" placeholder="Ссылка на картинку"
-          name="place-link" id="place-link" required value="">
+          name="link" id="place-link" required value="">
         <span class="popup__error" id="place-link-error"></span>
         <button class="popup__button popup__button_disabled" type="submit">Создать</button>
       </form>

@@ -52,16 +52,14 @@ const initialCards = [
 
 // -------------- Отрисовка начальной страницы с карточками
 
-// Функция создания новой карточки
 function createCard(item) {
   const card = new Card({data: item, handleCardClick}, "#card");
   return card.generateCard();
 };
 
-// Рендер карточки и добавление на страницу
 function renderCard(item) {
-  const card = createCard(item);
-  cardsList.addItem(card);
+  const newCardElement = createCard(item);
+  cardsList.addItem(newCardElement);
 };
 
 const cardsList = new Section({
@@ -87,26 +85,20 @@ popupImage.setEventListeners();
 
 // -------------- Редактирование профиля
 
-//создаем экземпляр класса, передаем в него селекторы html разметки
 const newUserInfo = new UserInfo({
   profileNameSelector: ".profile__title",
   descriptionSelector: ".profile__description",
 });
 
-//создаем экземпляр класса
 const popupProfile = new PopupWithForm(".popup-profile", {
   callbackSubmitForm: (inputValues) => {
-    //callbackSubmitForm передает значения инпутов в метод setUserInfo класса UserInfo
     newUserInfo.setUserInfo(inputValues);
   },
 });
 
 popupProfile.setEventListeners();
 
-//слушатель на кнопку редактирования данных профиля
 profileEditButton.addEventListener("click", () => {
-  //перед открытием попапа передаем данные из разметки в инпуты, открываем попап
-  //при клике методом getUserInfo() получаем объект и значение этого объекта ставим в инпуты, затем открываем попап
   const info = newUserInfo.getUserInfo();
   popupProfile.setinputValues(info);
   editProfileForm.resetValidation();
@@ -146,7 +138,6 @@ const addCardForm = new FormValidator(formValidationList, placeForm);
 addCardForm.enableValidation();
 
 
-export {formValidationList};
 
 
 // -------------------------------------------------------------------
@@ -203,7 +194,7 @@ export {formValidationList};
 //   openPopup(popupPlace);
 // };
 
-// // Функция сохранения новой карточки
+// Функция сохранения новой карточки
 // const submitPopupPlace = (evt) => {
 //   evt.preventDefault();
 //   const newCard = {

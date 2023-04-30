@@ -7,7 +7,7 @@ import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 import { PopupWithSubmit } from "../components/PopupWithSubmit.js";
 
-// import './index.css';
+import './index.css';
 
 const placeForm = document.forms['form-place'];
 const profileForm = document.forms["form-profile"];
@@ -52,6 +52,8 @@ const api = new Api({
 });
 
 const cards = api.getAllCards();
+// Получаем данные пользователя для добавления на страницу
+const myUserInfo = api.getUserInfo();
 
 
 // -------------- Удаление карточки
@@ -169,9 +171,6 @@ addNewCard.setEventListeners();
 
 
 // -------------- Редактирование профиля
-
-// Получаем данные пользователя для добавления на страницу
-const myUserInfo = api.getUserInfo();
 
 const newUserInfo = new UserInfo({
   profileNameSelector: ".profile__title",

@@ -7,8 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Artemii Sokolov">
   <meta name="keywords" content="html, css, javascript, yandex. yandex-practicum">
-  <link rel="stylesheet" href="./pages/index.css">
-  <script type="module" src="./pages/index.js" defer></script>
   <title>Mesto</title>
 </head>
 
@@ -61,10 +59,11 @@
           id="username" 
           minlength="2" 
           maxlength="40" 
-          required 
-          value="">
+          required
+          />
         <span class="popup__error" id="username-error"></span>
-        <input class="popup__input popup__input_type_error" 
+        <input 
+          class="popup__input popup__input_type_error" 
           type="text"
           placeholder="О себе"
           name="description"
@@ -72,7 +71,7 @@
           minlength="2"
           maxlength="200"
           required
-          value="">
+          />
         <span class="popup__error" id="about-error"></span>
         <button class="popup__button popup__button_disabled" type="submit">Сохранить</button>
       </form>

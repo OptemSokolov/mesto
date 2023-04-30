@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   align-items: baseline;
   overflow: hidden;
-
+  position: relative;
   width: 282px;
   height: 361px;
   background-color: #fff;

@@ -6,9 +6,9 @@ export class PopupWithForm extends Popup {
     this._callbackSubmitForm = callbackSubmitForm;
     this._form = this._popup.querySelector(".popup__form");
     this._inputs = this._form.querySelectorAll(".popup__input");
+    this._saveButton = this._form.querySelector(".popup__button");
   }
 
-  // Собирает данные со всех полей формы
   _getInputValues() {
     this._inputValues = {};
     this._inputs.forEach((input) => {
@@ -18,12 +18,11 @@ export class PopupWithForm extends Popup {
     return this._inputValues; 
   }
 
-  // Вставить данные в инпуты
   setinputValues(data) {
     this._inputs.forEach((input) => {
       input.value = data[input.name];
     });
-  };
+  }
 
   setEventListeners() {
     super.setEventListeners();
@@ -37,5 +36,9 @@ export class PopupWithForm extends Popup {
   close() {
     super.close();
     this._form.reset();
+  }
+
+  setButtonLoading(text) {
+    this._saveButton.textContent = text;
   }
 }

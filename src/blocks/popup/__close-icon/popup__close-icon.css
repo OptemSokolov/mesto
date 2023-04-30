@@ -9,9 +9,9 @@
   background-size: 62.5%;
   padding: 0;
   cursor: pointer;
-  position: relative;
+  position: absolute;
   left: 258px;
-  bottom: 370px;
+  bottom: 335px;
 }
 
 .popup__close-icon:hover {
@@ -23,6 +23,5 @@
   .popup__close-icon {
     background-size: 100%;
     left: 434px;
-    bottom: 375px;
   }
 }

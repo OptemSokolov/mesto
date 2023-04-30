@@ -23,7 +23,7 @@ export class FormValidator {
   }
 
    //Скрыть сообщение об ошибке
-  _hideInputError(item) {
+   _hideInputError(item) {
     this._inputId = item.id;
     this._errorElement = this._form.querySelector(`#${this._inputId}-error`);
     item.classList.remove(this._config.errorClass);
@@ -31,32 +31,34 @@ export class FormValidator {
   }
 
     // функция валидности данных инпутов
-  _handleFormInput(item) {
-    if (item.validity.valid) {
-      this._hideInputError(item);
-    } else {
-      this._showInputError(item);
+    _handleFormInput(item) {
+      if (item.validity.valid) {
+        this._hideInputError(item);
+      } else {
+        this._showInputError(item);
+      }
     }
-  }
 
      // Функция переключения состояния кнопки
-  _toggleButton() {
-    const isFormValid = this._form.checkValidity();
-    this._buttonSubmit.disabled = !isFormValid; 
-    this._buttonSubmit.classList.toggle(
-      this._config.inactiveButtonClass,
-      !isFormValid
-    );
-  }
+     _toggleButton() {
+      const isFormValid = this._form.checkValidity(); 
+      this._buttonSubmit.disabled = !isFormValid;
+      this._buttonSubmit.classList.toggle(
+        this._config.inactiveButtonClass,
+        !isFormValid
+      );
+    }
 
    // Слушатели
    _addInputListeners() {
     this._form.querySelectorAll(this._config.inputSelector).forEach((item) => {
+      // Инпут слушатель
       item.addEventListener("input", () => {
         this._handleFormInput(item);
         this._toggleButton();
       });
     });
+    // Ресет слушатель
     this._form.addEventListener("reset", () => {
       setTimeout(() => {
         this._toggleButton();

@@ -7,14 +7,14 @@ import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 import { PopupWithSubmit } from "../components/PopupWithSubmit.js";
 
-import './index.css';
+// import './index.css';
 
 const placeForm = document.forms['form-place'];
 const profileForm = document.forms["form-profile"];
 const avatarForm = document.forms["form-avatar"]
 const profileEditButton = document.querySelector('.profile__edit-button');
 const avatarEditButton = document.querySelector('.profile__avatar-button')
-const addButton = document.querySelector('.profile__add-button');
+const profileAddButton = document.querySelector('.profile__add-button');
 const elementsListSelector = ".cards__list";
 
 
@@ -30,18 +30,18 @@ const formValidationList = {
 };
 
 // Валидация форм профиль и плейс
-const editProfileForm = new FormValidator(formValidationList, profileForm);
-editProfileForm.enableValidation();
+const profileEditForm = new FormValidator(formValidationList, profileForm);
+profileEditForm.enableValidation();
 const addCardForm = new FormValidator(formValidationList, placeForm);
 addCardForm.enableValidation();
-const editAvatarForm = new FormValidator(formValidationList, avatarForm);
-editAvatarForm.enableValidation();
+const avatarEditForm = new FormValidator(formValidationList, avatarForm);
+avatarEditForm.enableValidation();
 
 
 
 // -------------- Запускаем API
 
-let profileID =  null;
+let profileId =  null;
 
 const api = new Api({
   url: "https://mesto.nomoreparties.co/v1/cohort-64",
@@ -87,7 +87,7 @@ function createCard(item) {
             .removeLike(id)
             .then((data) => {
               card.deleteLike();
-              card.countLikes(data.likes);
+              card.setLikesCount(data.likes);
             })
             .catch((err) => {
               alert(err);
@@ -97,7 +97,7 @@ function createCard(item) {
             .putLike(id)
             .then((data) => {
               card.addLike();
-              card.countLikes(data.likes);
+              card.setLikesCount(data.likes);
             })
             .catch((err) => {
               alert(err);
@@ -110,7 +110,7 @@ function createCard(item) {
       },
     },
     "#card-template",
-    profileID
+    profileId
   );
   return card.generateCard();
 }
@@ -138,36 +138,36 @@ popupImage.setEventListeners();
 profileEditButton.addEventListener("click", () => {
   const info = newUserInfo.getUserInfo();
   popupProfile.setinputValues(info);
-  editProfileForm.resetValidation();
+  profileEditForm.resetValidation();
   popupProfile.open();
 });
 
 // -------------- Добавление новой карточки
 
-const addNewCard = new PopupWithForm('.popup-place', {
+const newCard = new PopupWithForm('.popup-place', {
   callbackSubmitForm: (inputValues) => {
     //callbackSubmitForm передает значения инпутов из PopupWithForm
-    addNewCard.setButtonLoading("Сохранение...");
+    newCard.setButtonLoading("Сохранение...");
     api
       .saveCard(inputValues)
       .then((data) => {
-        addNewCard.close();
+        newCard.close();
         renderCard(data);
       })
       .catch((err) => {
         alert(err);
       })
       .finally(() => {
-        addNewCard.setButtonLoading("Создать");
+        newCard.setButtonLoading("Создать");
       });
   },
 });
 
-addButton.addEventListener("click", () => {
-  addNewCard.open();
+profileAddButton.addEventListener("click", () => {
+  newCard.open();
 });
 
-addNewCard.setEventListeners();
+newCard.setEventListeners();
 
 
 // -------------- Редактирование профиля
@@ -226,7 +226,7 @@ popupEditAvatar.setEventListeners();
 Promise.all([myUserInfo, cards])
   .then(([myUserInfo, cards]) => {
     newUserInfo.setUserInfo(myUserInfo);
-    profileID = myUserInfo._id;
+    profileId = myUserInfo._id;
 
     cardsList.renderItems(cards);
   })

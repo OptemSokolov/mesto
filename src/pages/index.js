@@ -7,7 +7,7 @@ import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 import { PopupWithSubmit } from "../components/PopupWithSubmit.js";
 
-// import './index.css';
+import './index.css';
 
 const placeForm = document.forms['form-place'];
 const profileForm = document.forms["form-profile"];
